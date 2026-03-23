@@ -1,0 +1,97 @@
+# Server Configuration
+server:
+  # Gateway Server Port
+  port: 8090
+  # Server accept request header size | This is following the old connector's setting.
+  max-http-request-header-size: 64KB
+
+# Management Port and Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "gateway,health,info" # Expose gateway management endpoints
+  endpoint:
+    gateway:
+      access: unrestricted
+  observations:
+    context-propagation:
+      enabled: true
+  tracing:
+    enabled: true
+  metrics:
+    enable:
+      micrometer: true
+
+# Spring Security OAuth2/OIDC Configuration
+spring:
+  # Disable DataSource and JPA for memory repository
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?currentSchema=${DB_SCHEMA:public}${DB_SSL_PARAMS:}}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+
+ # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Changed from 'update' to 'validate' since Flyway handles schema
+    
+  # Flyway Configuration for Database Migration
+  flyway:
+    url: ${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?currentSchema=${DB_SCHEMA:public}${DB_SSL_PARAMS:}}
+    user: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    validate-on-migrate: true
+    clean-disabled: true  # Disable clean for production safety
+    schemas: ${DB_SCHEMA:public}  # This schema will be created if it does not exist
+    default-schema: ${DB_SCHEMA:public}  # Flyway will use this schema by default
+    create-schemas: true
+            
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # The issuer-uri is used to discover the JWK set URI for token validation
+          issuer-uri: "${KEYCLOAK_URL:http://localhost}/realms/${KEYCLOAK_REALM:test}"
+  
+  cloud:
+    # Spring Cloud Gateway Configuration
+    # Pool and Timeout Settings are following the old connector's setting.
+    gateway:
+      httpclient:
+        connect-timeout: 59000  # in milliseconds
+        response-timeout: 59000ms  # in java.time.Duration format
+        pool:
+          type: FIXED  # Connection pool type (ELASTIC, FIXED or DISABLED)
+          acquire-timeout: 59000  # in milliseconds | Only valid for FIXED pool type
+          max-connections: 10000  # Only valid for FIXED pool type
+          max-idle-time: 59000ms  # in java.time.Duration format
+          max-life-time: 59000ms  # in java.time.Duration format
+          
+# Custom Gateway Properties
+apigateway:
+  
+  # API Key for securing the management port (9090)
+  management-api-key: "your-secret-management-api-key"
+  # AuthZEN Authorization Configuration
+  authzen:
+    enabled: ${AUTHZEN_AUTHORIZATION_ENABLED:false}
+    pdp-endpoint: "${FGA_URL}/stores/${FGA_STORE_ID}/access/v1/evaluation"
+    api-key: "your-secret-authzen-api-key"
+    api-key-header: "Authorization"  # Header for AuthZEN API Key, defaults to "Authorization"
+    subject-type: "user"  # The subject type used in AuthZEN requests. Defaults to "user".
+    subject-id-attribute-name: "operator_id"  # The OAuth2User attribute (JWT claim) name to extract subject ID. Defaults to "operator_id".
+    resource-type: "endpoint"  # The resource type used in AuthZEN requests. Defaults to "endpoint".
+    resource-id-metadata-key: "endpointId"  # The metadata key to extract resource ID from route definition. Defaults to "endpointId".
+    action-name: "can_access"  # The action name used in AuthZEN requests. Defaults to "can_access".
+
+
+# Security Configuration
+security:
+  management-base-path: "/actuator"
+  # Valid API keys for header validation (from environment variable)
+  valid-api-keys-enabled: ${VALID_API_KEYS_ENABLED:true}
+  valid-api-keys: ${VALID_API_KEYS:your-secret-management-api-key,api-key-1,api-key-2,api-key-3}

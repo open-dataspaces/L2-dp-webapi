@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Console appender for development -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Pattern that automatically includes MDC context information -->
+            <!-- Temporary pattern to show all MDC content -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [MDC:%X] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- logger properties -->
+    <property name="LOGLEVEL" value="${LOGLEVEL:-INFO}"/>
+
+    <!-- Root logger configuration -->
+    <root level="${LOGLEVEL}">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    
+    <!-- Debug logging for ODS components -->
+    <logger name="nedo.ods.svc.dp" level="${LOGLEVEL}"/>
+    <logger name="org.springframework.cloud.gateway" level="${LOGLEVEL}"/>
+    <logger name="org.springframework.security" level="${LOGLEVEL}"/>
+
+</configuration>

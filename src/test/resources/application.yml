@@ -1,0 +1,25 @@
+# Test configuration for JPA repository tests
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false  # Reduced logging for cleaner test output
+    properties:
+      hibernate:
+        format_sql: false
+    
+  flyway:
+    enabled: false
+
+logging:
+  level:
+    org.hibernate.SQL: ERROR
+    org.springframework.test: WARN
+    nedo.ods.svc.dp.http: INFO

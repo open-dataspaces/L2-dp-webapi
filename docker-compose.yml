@@ -1,0 +1,123 @@
+services:
+  gateway:
+    image: l2-test:latest
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8081
+      - KEYCLOAK_REALM=master
+      - FGA_URL=http://openfga:8080
+      - FGA_STORE_ID=test-store
+      - DB_URL=jdbc:postgresql://postgres:5432/postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_SCHEMA=public
+      - VALID_API_KEYS=12345-test-key
+      - LOGLEVEL=DEBUG
+      - VALID_API_KEYS_ENABLED=true
+      - AUTHZEN_AUTHORIZATION_ENABLED=false
+    ports:
+      - 8090:8090
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+    volumes:
+      - ./l3/database:/init
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: password
+      KC_HTTP_ENABLED: "true"
+      KC_HTTP_PORT: 8081
+      KC_PROXY: "edge"
+      KC_PROXY_HEADERS: "xforwarded"
+      KC_HOSTNAME_URL: "http://keycloak:8081"
+      KC_HOSTNAME_ADMIN_URL: "http://localhost:8081"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+    command: ["start", "--http-enabled=true", "--http-port=8081", "--verbose"]
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000;echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3;grep -q 'HTTP/1.1 200 OK' <&3"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prism:
+    image: stoplight/prism:4
+    command: ["mock", "-h", "0.0.0.0", "/openapi.yaml"]
+    ports:
+      - "4010:4010"
+    volumes:
+      - "./openapi.yaml:/openapi.yaml:ro"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: openfga
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      timeout: 20s
+      retries: 5
+
+  openfga-migrate:
+    image: ghcr.io/8hz/openfga:v1.9.5-authzen
+    command: migrate
+    environment:
+      OPENFGA_DATASTORE_ENGINE: mysql
+      OPENFGA_DATASTORE_URI: root:secret@tcp(mysql:3306)/openfga?parseTime=true
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  openfga:
+    image: ghcr.io/8hz/openfga:v1.9.5-authzen
+    command: run
+    environment:
+      OPENFGA_DATASTORE_ENGINE: mysql
+      OPENFGA_DATASTORE_URI: root:secret@tcp(mysql:3306)/openfga?parseTime=true
+      OPENFGA_LOG_FORMAT: json
+      # OPENFGA_HTTP_ADDR: 0.0.0.0:9080
+      # OPENFGA_GRPC_ADDR: 0.0.0.0:9081
+      OPENFGA_LOG_LEVEL: debug
+    depends_on:
+      openfga-migrate:
+        condition: service_completed_successfully
+    ports:
+      - "3000:3000" # Playground
+      - "8080:8080" # HTTP API
+      - "1081:8081" # gRPC API
+
+networks:
+  default:
+    name: test-network
+    external: true
+volumes:
+  pgdata:
+  mysqldata:  
