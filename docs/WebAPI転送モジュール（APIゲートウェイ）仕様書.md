@@ -3,8 +3,8 @@
 
 
 ## はじめに
-本仕様書は、ウラノス・エコシステムにおける技術参照⽂書「ウラノス・エコシステム・データスペーシズリファレンスアーキテクチャモデル（ODS-RAM）」の参照実装のうち、トランザクションレイヤ（L2）に規定されたODS Flex Dataspace Connector（ODS-FDC）のデータプレーンモジュールの⼀つであるWeb API転送モジュールの仕様となる。  
-ODS-RAM、ODS-FDCの詳細については[こちら](http://open-dataspaces.gitbook.io/ods-docs/jp)を参照すること。  
+本仕様書は、Open Data Spaces（ODS）における技術参照文書「Open Data Spaces Reference Architecture Model（ODS-RAM）」の参照実装のうち、トランザクションレイヤ（L2）のデータプレーンモジュールの1つであるWeb API転送モジュールの仕様となる。 
+ODS-RAMの詳細については[こちら](http://open-dataspaces.gitbook.io/ods-docs/jp)を参照すること。  
 
 ## 前提事項
 Web API転送モジュールは、透過的APIゲートウェイ方式を採用し、ルーティング機能のみに限定している。このため、過去の参照実装で対応していたデータ解析やモデル変換の機能は提供していない。また、Web API転送モジュールは、インダストリサービス（クライアントアプリケーション）と外部システム間の通信に介在し、アイデンティコンポーネントと連携したトークン検証およびPEP（Policy Enforcement Point）機能を提供する。PEP機能ではAPIレベルでの認可制御機能を提供する。   

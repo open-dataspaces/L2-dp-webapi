@@ -3,8 +3,8 @@ This document organizes the specifications for the Web API Transfer Module using
 
 
 ## Introduction
-This specification describes the Web API Transfer Module, one of the data plane modules of the ODS Flex Dataspace Connector (ODS-FDC) defined in the transaction layer (L2) of the technical reference document "Ouranos Ecosystem Dataspaces Reference Architecture Model (ODS-RAM)" for the Ouranos Ecosystem.
-For details on ODS-RAM and ODS-FDC, refer to [here](http://open-dataspaces.gitbook.io/ods-docs).
+This specification describes the Web API Transfer Module, one of the data plane modules defined in the transaction layer (L2) of the technical reference document "Open Data Spaces Reference Architecture Model (ODS-RAM)" for the Open Data Spaces (ODS).
+For details on ODS-RAM, refer to [here](http://open-dataspaces.gitbook.io/ods-docs).
 
 ## Prerequisites
 

@@ -1,15 +1,15 @@
 ## 概要・目的
-本リポジトリでは、Open Dataspaces（ODS）における技術参照文書「Open Dataspaces Reference Architecture Model（ODS-RAM）」の参照実装のうち、トランザクションレイヤ（L2）のデータプレーンモジュールの1つであるWeb API転送モジュールについて公開する。  
+本リポジトリでは、Open Data Spaces（ODS）における技術参照文書「Open Data Spaces Reference Architecture Model（ODS-RAM）」の参照実装のうち、トランザクションレイヤ（L2）のデータプレーンモジュールの1つであるWeb API転送モジュールについて公開する。  
 
 ODS-RAMの詳細については[こちら](http://open-dataspaces.gitbook.io/ods-docs/jp)を参照すること。
 
 ## 基本概念
-「ODS」とは、オープンで中立的なデータスペースの技術コンセプトであり、企業・業界・国境を横断したエンタープライズデータの連携と利活用を促進する。  
+「Open Data Spaces (ODS)」は、国や組織ごとの多様性を尊重する、オープンでスケーラブルな分散データマネジメントの技術コンセプトである。  
 
 ODSでは産業界がデータスペースの社会実装を早急に進めるためのサービスライフサイクルに焦点をおいたアーキテクチャモデルである「ODS-RAM」を公開しており、その中で「形式」、「要求」、「手段」の問題を解決するレイヤとして「トランザクションレイヤ」が定義されている。Web API転送モジュールは、トランザクションレイヤにおけるデータプレーンモジュールの1つであり、低ペイロードのWeb API転送に特化したデータプレーンモジュールである。
 
 ## 機能概要・機能一覧
-機能についてはL2のプロトコル仕様をまとめた[Open Dataspaces Protocol（ODP）](http://open-dataspaces.gitbook.io/ods-docs/jp)および[Web API転送モジュール仕様書](docs//WebAPI転送モジュール（APIゲートウェイ）仕様書.md)を参照すること。
+機能についてはL2のプロトコル仕様をまとめた[Open Data Spaces Protocol（ODP）](http://open-dataspaces.gitbook.io/ods-docs/jp)および[Web API転送モジュール仕様書](docs//WebAPI転送モジュール（APIゲートウェイ）仕様書.md)を参照すること。
 
 ## ディレクトリ構成
 ```
@@ -137,7 +137,7 @@ $ docker network create test-network
 $ docker compose up -d
 ```
 
-### 5. keycloakドメインの設定<br>
+### 5. keycloakホスト名の設定<br>
 ```
 $ echo "127.0.0.1 keycloak" | sudo tee -a /etc/hosts
 $ getent hosts keycloak

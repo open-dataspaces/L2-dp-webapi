@@ -1,15 +1,15 @@
 ## Overview and Purpose
-This repository publishes the Web API Transfer Module, one of the data plane modules in the Transaction Layer (L2), as a reference implementation for the Open Dataspaces Reference Architecture Model (ODS-RAM).
+This repository publishes the Web API Transfer Module, one of the data plane modules in the Transaction Layer (L2), as a reference implementation for the Open Data Spaces Reference Architecture Model (ODS-RAM).
 
 For details about ODS-RAM, please click [here](http://open-dataspaces.gitbook.io/ods-docs). 
 
 ## Core Concepts
-"ODS" (Open Dataspaces) is a technical concept for open and neutral data spaces that facilitate cross-company, cross-industry, and cross-border enterprise data sharing and utilization.
+Open Data Spaces (ODS) is an open and scalable foundation for distributed data, built on organizational and national diversity by design.
 
 To accelerate practical deployment of data spaces, the ODS architecture model (ODS-RAM) defines a service lifecycle and a set of layers that address formats, queries, and protocols. The Transaction Layer (L2) solves transaction-level concerns; the Web API Transfer Module is an L2 data-plane module specialized for low-payload Web API Transfer Module.
 
 ## Features and References
-See the [Open Dataspaces Protocol (ODP) ](http://open-dataspaces.gitbook.io/ods-docs)and the [Web API Transfer Module specification](docs/Web-API-Transfer-Module-API-Gateway-Specification_en.md) for L2 protocol and feature details.
+See the [Open Data Spaces Protocol (ODP) ](http://open-dataspaces.gitbook.io/ods-docs)and the [Web API Transfer Module specification](docs/Web-API-Transfer-Module-API-Gateway-Specification_en.md) for L2 protocol and feature details.
 
 ## Repository Layout
 ```
