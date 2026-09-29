@@ -173,7 +173,7 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 ```
 curl -X POST <keycloakドメイン>/realms/<keycloakレルム>/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=<client_id>" \
@@ -190,7 +190,7 @@ curl -X POST <keycloakドメイン>/realms/<keycloakレルム>/protocol/openid-c
 ```
 curl -v -X POST <Web API転送モジュールドメイン><パス> \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <取得したアクセストークン>" \
+  -H "Authorization: Bearer <取得したアクセストークン>" \
   -H "API-Key: <API-Key>" \
   -H <任意のヘッダー> \
   -d '{<任意のボディ>}'

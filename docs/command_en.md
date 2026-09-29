@@ -173,7 +173,7 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 ```
 curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=<client_id>" \
@@ -190,7 +190,7 @@ curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/t
 ```
 curl -v -X POST <WebAPI Transfer Module Domain><Path> \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <acquired access token>" \
+  -H "Authorization: Bearer <acquired access token>" \
   -H "API-Key: <API-Key>" \
   -H <optional header> \
   -d '{<optional body>}'

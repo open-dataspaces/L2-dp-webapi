@@ -100,7 +100,7 @@ curl -s -H "X-API-Key: your-secret-management-api-key"\
 ```
 curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=test_client" \
@@ -114,7 +114,7 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
 ```
 curl -v -X POST http://localhost:8090/test \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <obtained token>" \
+  -H "Authorization: Bearer <obtained token>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
@@ -320,7 +320,7 @@ curl -s -H "X-API-Key: your-secret-management-api-key"\
 ```
 curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=test_client" \
@@ -335,14 +335,14 @@ Note:Authentication using the client credentials flow.
  # Normal
 curl -v -X POST http://localhost:8090/authtest \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <obtained token>" \
+  -H "Authorization: Bearer <obtained token>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
   
  # Authorization error
 curl -v -X POST http://localhost:8090/authngtest \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <obtained token>" \
+  -H "Authorization: Bearer <obtained token>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```

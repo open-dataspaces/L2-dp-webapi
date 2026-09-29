@@ -100,7 +100,7 @@ curl -s -H "X-API-Key: your-secret-management-api-key"\
 ```
 curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=test_client" \
@@ -114,7 +114,7 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
 ```
 curl -v -X POST http://localhost:8090/test \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <取得したトークン>" \
+  -H "Authorization: Bearer <取得したトークン>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
@@ -310,7 +310,7 @@ curl -s -H "X-API-Key: your-secret-management-api-key"\
 ```
 curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=test_client" \
@@ -325,14 +325,14 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
  # 正常
 curl -v -X POST http://localhost:8090/authtest \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <取得したトークン>" \
+  -H "Authorization: Bearer <取得したトークン>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
   
  # 認可エラー
 curl -v -X POST http://localhost:8090/authngtest \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <取得したトークン>" \
+  -H "Authorization: Bearer <取得したトークン>" \
   -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
