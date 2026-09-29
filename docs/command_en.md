@@ -9,35 +9,34 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <Management API-KEY>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**" ← Request path accepted by Gateway
-        }
-    }],
-    "filters": [
-     {
-      "name": "RewritePath",
-      "args": {
-        "_genkey_0": "/test(?<segment>.*)", ← Request path before rewrite
-        "_genkey_1": "/demo/test/${segment}" ← Destination path after rewrite
-      }
-    },
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-KEY",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "api-key"
-    }
-    }]
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**" ← Request path accepted by Gateway
+            }
+        }],
+        "filters": [{
+            "name": "RewritePath",
+            "args": {
+                "_genkey_0": "/test(?<segment>.*)", ← Request path before rewrite
+                "_genkey_1": "/demo/test/${segment}" ← Destination path after rewrite
+            }
+        },
+        {
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-KEY",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "api-key"
+            }
+        }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
@@ -65,28 +64,27 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <Management API-KEY>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**"
-        }
-    }],
-    "filters": [
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-KEY",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "api-key"
-    }
-    }]
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**"
+            }
+        }],
+        "filters": [{
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-KEY",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "api-key"
+            }
+        }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
@@ -113,23 +111,23 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <Management API-KEY>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**"
-      },
-      { 
-        "name": "Method",
-        "args": { 
-        "_genkey_0": "<HTTP Method>"
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+            "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**"
+            }
+        },
+        {
+            "name": "Method",
+            "args": { 
+              "_genkey_0": "<HTTP Method>"
+            }
+        }],
+        "metadata": {
+            "endpointId": "<Endpoint ID>"
         }
-    }
-    }],
-    "metadata": {
-      "endpointId": "<Endpoint ID>"
-     }
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 

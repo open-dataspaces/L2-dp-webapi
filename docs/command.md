@@ -9,35 +9,34 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <マネージメントAPI-KEY>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
-        }
-    }],
-    "filters": [
-     {
-      "name": "RewritePath",
-      "args": {
-        "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
-        "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
-      }
-    },
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-KEY",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "api-key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
+            }
+        }],
+        "filters": [{
+            "name": "RewritePath",
+            "args": {
+                "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
+                "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
+            }
+        },
+        {
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-KEY",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "api-key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -65,28 +64,27 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <マネージメントAPI-KEY>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-        }
-    }],
-    "filters": [
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-KEY",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "api-key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        }],
+        "filters": [{
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-KEY",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "api-key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -113,23 +111,23 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-KEY: <マネージメントAPI-KEY>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-      },
-      { 
-        "name": "Method",
-        "args": { 
-        "_genkey_0": "<HTTPメソッド>"
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        },
+        {
+            "name": "Method",
+            "args": { 
+              "_genkey_0": "<HTTPメソッド>"
+            }
+        }],
+        "metadata": {
+            "endpointId": "<エンドポイントID>"
         }
-    }
-    }],
-    "metadata": {
-      "endpointId": "<エンドポイントID>"
-     }
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
