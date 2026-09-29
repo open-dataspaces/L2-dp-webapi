@@ -68,7 +68,7 @@ Note: If you want to create a custom realm or user, create them here
 <br>
 
 ## Web API Transfer Module Communication Procedure
-### ■When authorization is not required (Authorization by OpenFGA)
+### ■When authorization is not required
 1. Route Registration & Confirmation
 
 ```
