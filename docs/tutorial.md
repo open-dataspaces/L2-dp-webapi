@@ -75,7 +75,7 @@ Password:admin
 # 登録
 curl -X POST\
     -H "Content-Type: application/json"\
-    -H "X-API-KEY: your-secret-management-api-key"\
+    -H "X-API-Key: your-secret-management-api-key"\
     -d '{
     "id": "route1",
     "uri": "http://prism:4010",
@@ -89,7 +89,7 @@ curl -X POST\
     http://localhost:8090/actuator/gateway/routes/route1
 
  # 確認
-curl -s -H "X-API-KEY: your-secret-management-api-key"\
+curl -s -H "X-API-Key: your-secret-management-api-key"\
     http://localhost:8090/actuator/gateway/routes
 ```
 
@@ -115,7 +115,7 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
 curl -v -X POST http://localhost:8090/test \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <取得したトークン>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
 ※クライアントクレデンシャルフローでの認証<br>
@@ -253,7 +253,7 @@ docker compose up -d gateway
 # 登録(metadataブロックを追加)
 curl -X POST \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-secret-management-api-key" \
+  -H "X-API-Key: your-secret-management-api-key" \
   -d '{
     "id": "route02",
     "uri": "http://prism:4010",
@@ -278,7 +278,7 @@ curl -X POST \
  # 認可エラーのルート登録
 curl -X POST \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-secret-management-api-key" \
+  -H "X-API-Key: your-secret-management-api-key" \
   -d '{
     "id": "route03",
     "uri": "http://prism:4010",
@@ -301,7 +301,7 @@ curl -X POST \
   http://localhost:8090/actuator/gateway/routes/route03
   
  # 確認
-curl -s -H "X-API-KEY: your-secret-management-api-key"\
+curl -s -H "X-API-Key: your-secret-management-api-key"\
      http://localhost:8090/actuator/gateway/routes | jq
 ```
 
@@ -326,14 +326,14 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
 curl -v -X POST http://localhost:8090/authtest \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <取得したトークン>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
   
  # 認可エラー
 curl -v -X POST http://localhost:8090/authngtest \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <取得したトークン>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
 

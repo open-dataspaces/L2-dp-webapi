@@ -75,7 +75,7 @@ Note: If you want to create a custom realm or user, create them here
 # Registration
 curl -X POST\
     -H "Content-Type: application/json"\
-    -H "X-API-KEY: your-secret-management-api-key"\
+    -H "X-API-Key: your-secret-management-api-key"\
     -d '{
     "id": "route1",
     "uri": "http://prism:4010",
@@ -89,7 +89,7 @@ curl -X POST\
     http://localhost:8090/actuator/gateway/routes/route1
 
  # Confirmation
-curl -s -H "X-API-KEY: your-secret-management-api-key"\
+curl -s -H "X-API-Key: your-secret-management-api-key"\
     http://localhost:8090/actuator/gateway/routes
 ```
 
@@ -115,7 +115,7 @@ curl -X POST http://keycloak:8081/realms/master/protocol/openid-connect/token \
 curl -v -X POST http://localhost:8090/test \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <obtained token>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
 Note:Authentication using the client credentials flow.<br>
@@ -263,7 +263,7 @@ docker compose up -d gateway
 # Registration (add metadata block)
 curl -X POST \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-secret-management-api-key" \
+  -H "X-API-Key: your-secret-management-api-key" \
   -d '{
     "id": "route02",
     "uri": "http://prism:4010",
@@ -288,7 +288,7 @@ curl -X POST \
  # Registering the root for authorization errors
 curl -X POST \
   -H "Content-Type: application/json" \
-  -H "X-API-KEY: your-secret-management-api-key" \
+  -H "X-API-Key: your-secret-management-api-key" \
   -d '{
     "id": "route03",
     "uri": "http://prism:4010",
@@ -311,7 +311,7 @@ curl -X POST \
   http://localhost:8090/actuator/gateway/routes/route03
   
  # Confirmation
-curl -s -H "X-API-KEY: your-secret-management-api-key"\
+curl -s -H "X-API-Key: your-secret-management-api-key"\
      http://localhost:8090/actuator/gateway/routes | jq
 ```
 
@@ -336,14 +336,14 @@ Note:Authentication using the client credentials flow.
 curl -v -X POST http://localhost:8090/authtest \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <obtained token>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
   
  # Authorization error
 curl -v -X POST http://localhost:8090/authngtest \
   -H "Content-Type: application/json" \
   -H "Authorization: bearer <obtained token>" \
-  -H "api-key: 12345-test-key" \
+  -H "API-Key: 12345-test-key" \
   -d '{"userid":112233}'
 ```
 
