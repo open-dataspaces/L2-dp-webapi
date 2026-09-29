@@ -347,9 +347,10 @@ Request successfully delivered!
   {
     "code": "[auth] Forbidden",
     "message": "Access denied",
-    "detail": "timeStamp: 2025-09-25T14:30:00Z" // ※この値は実行時の日時に応じて変化します
+    "detail": "timeStamp: 2025-09-25T14:30:00Z" 
   }
 ```
+※ "detail"の値は実行時の日時に応じて変化します
 
 ## ドキュメント
 - チュートリアルで実行した各コマンドの解説については[こちら](./command.md)を参照

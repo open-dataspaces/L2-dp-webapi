@@ -357,9 +357,10 @@ Request successfully delivered!
   {
     "code": "[auth] Forbidden",
     "message": "Access denied",
-    "detail": "timeStamp: 2025-09-25T14:30:00Z" // This value varies depending on the date and time of execution.
+    "detail": "timeStamp: 2025-09-25T14:30:00Z" 
   }
 ```
+※ The value of "detail" varies depending on the date and time of execution.
 
 ## Documentation
 - For explanations of each command executed in the tutorial, see [here](./command_en.md)
