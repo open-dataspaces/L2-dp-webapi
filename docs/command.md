@@ -179,7 +179,7 @@ curl -X POST <keycloakドメイン>/realms/<keycloakレルム>/protocol/openid-c
   -d "client_id=<client_id>" \
   -d "client_secret=<コピーしたclient secret>" 
 ```
-- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8010）
+- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8081）
 - **keycloakレルム**：keycloakのレルム（例：master）
 - **client_id**：keycloakのclient id（例：test_client）
 - **コピーしたclient secret**：client idで指定したクライアントのシークレット。クライアントのクレデンシャルタブから確認可。

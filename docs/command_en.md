@@ -179,7 +179,7 @@ curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/t
   -d "client_id=<client_id>" \
   -d "client_secret=<copied client secret>" 
 ```
-- **keycloak domain**: The domain for keycloak. Set the same value as KEYCLOAK_URL specified in the WebAPI transfer module environment variable (e.g., http://keycloak:8010)
+- **keycloak domain**: The domain for keycloak. Set the same value as KEYCLOAK_URL specified in the WebAPI transfer module environment variable (e.g., http://keycloak:8081)
 - **keycloak realm**: The realm for keycloak (e.g., master)
 - **client_id**: The client id for keycloak (e.g., test_client)
 - **copied client secret**: The secret for the client specified by client id. Can be checked in the credentials tab of the client.
