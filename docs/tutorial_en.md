@@ -68,7 +68,7 @@ Note: If you want to create a custom realm or user, create them here
 <br>
 
 ## Web API Transfer Module Communication Procedure
-### ■When authorization is not required (Authorization by OpenFGA)
+### ■When authorization is not required
 1. Route Registration & Confirmation
 
 ```
@@ -357,9 +357,10 @@ Request successfully delivered!
   {
     "code": "[auth] Forbidden",
     "message": "Access denied",
-    "detail": "timeStamp: 2025-09-25T14:30:00Z" // This value varies depending on the date and time of execution.
+    "detail": "timeStamp: 2025-09-25T14:30:00Z" 
   }
 ```
+※ The value of "detail" varies depending on the date and time of execution.
 
 ## Documentation
 - For explanations of each command executed in the tutorial, see [here](./command_en.md)
