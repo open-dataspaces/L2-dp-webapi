@@ -7,7 +7,7 @@ Below are three sample patterns.
 # Registration
 curl -X POST\
     -H "Content-Type: application/json"\
-    -H "X-API-KEY: <Management API-KEY>"\
+    -H "X-API-Key: <Management API-Key>"\
     -d '{
     "id": "<Route Number>",
     "uri": "<Destination Domain>",
@@ -28,25 +28,25 @@ curl -X POST\
     {
         "name": "AddRequestHeader",
         "args": {
-            "name": "X-API-KEY",
+            "name": "X-API-Key",
             "value": "sent-api-key-123"
         }
     },
     {
         "name": "RemoveRequestHeader",
         "args": {
-        "name": "api-key"
+        "name": "API-Key"
     }
     }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
 # Confirmation
-curl -s -H "X-API-KEY: <Management API-KEY>"\
+curl -s -H "X-API-Key: <Management API-Key>"\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes
 ```
 
-- **Management API-KEY**: API-KEY for the management API (e.g., your-secret-management-api-key)
+- **Management API-Key**: API-Key for the management API (e.g., your-secret-management-api-key)
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
@@ -63,7 +63,7 @@ curl -s -H "X-API-KEY: <Management API-KEY>"\
 # Registration
 curl -X POST\
     -H "Content-Type: application/json"\
-    -H "X-API-KEY: <Management API-KEY>"\
+    -H "X-API-Key: <Management API-Key>"\
     -d '{
     "id": "<Route Number>",
     "uri": "<Destination Domain>",
@@ -77,25 +77,25 @@ curl -X POST\
     {
         "name": "AddRequestHeader",
         "args": {
-            "name": "X-API-KEY",
+            "name": "X-API-Key",
             "value": "sent-api-key-123"
         }
     },
     {
         "name": "RemoveRequestHeader",
         "args": {
-        "name": "api-key"
+        "name": "API-Key"
     }
     }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
 # Confirmation
-curl -s -H "X-API-KEY: <Management API-KEY>"\
+curl -s -H "X-API-Key: <Management API-Key>"\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes
 ```
 
-- **Management API-KEY**: API-KEY for the management API (e.g., your-secret-management-api-key)
+- **Management API-Key**: API-Key for the management API (e.g., your-secret-management-api-key)
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
@@ -111,7 +111,7 @@ curl -s -H "X-API-KEY: <Management API-KEY>"\
 # Registration
 curl -X POST\
     -H "Content-Type: application/json"\
-    -H "X-API-KEY: <Management API-KEY>"\
+    -H "X-API-Key: <Management API-Key>"\
     -d '{
     "id": "<Route Number>",
     "uri": "<Destination Domain>",
@@ -134,11 +134,11 @@ curl -X POST\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
 # Confirmation
-curl -s -H "X-API-KEY: <Management API-KEY>"\
+curl -s -H "X-API-Key: <Management API-Key>"\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes
 ```
 
-- **Management API-KEY**: API-KEY for the management API (e.g., your-secret-management-api-key)
+- **Management API-Key**: API-Key for the management API (e.g., your-secret-management-api-key)
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
@@ -157,15 +157,15 @@ curl -s -H "X-API-KEY: <Management API-KEY>"\
 ```
 # Deletion
 curl -X DELETE \
-  -H "X-API-KEY: <Management API-KEY>" \
+  -H "X-API-Key: <Management API-Key>" \
   <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
 # Confirmation
-curl -s -H "X-API-KEY: <Management API-KEY>"\
+curl -s -H "X-API-Key: <Management API-Key>"\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes
 ```
 
-- **Management API-KEY**: API-KEY for the management API (e.g., your-secret-management-api-key)
+- **Management API-Key**: API-Key for the management API (e.g., your-secret-management-api-key)
 - **WebAPI Transfer Module Domain**: The domain of the WebAPI transfer module (http://localhost:8090)
 - **Route Number**: The index number for the registered route (e.g., route01)
 
@@ -175,7 +175,7 @@ curl -s -H "X-API-KEY: <Management API-KEY>"\
 ```
 curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -H "accept: application/json" \
+  -H "Accept: application/json" \
   -H "Accept-Language: ja-JP" \
   -d "grant_type=client_credentials" \
   -d "client_id=<client_id>" \
@@ -192,14 +192,14 @@ curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/t
 ```
 curl -v -X POST <WebAPI Transfer Module Domain><Path> \
   -H "Content-Type: application/json" \
-  -H "Authorization: bearer <acquired access token>" \
-  -H "api-key: <API-KEY>" \
+  -H "Authorization: Bearer <acquired access token>" \
+  -H "API-Key: <API-Key>" \
   -H <optional header> \
   -d '{<optional body>}'
 ```
 - **WebAPI Transfer Module Domain**: The domain of the WebAPI transfer module (http://localhost:8090)
 - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
 - **Acquired access token**: The access token obtained from the token acquisition command
-- **API-KEY**: The value of VALID_API_KEY specified in the environment variable when starting the WebAPI transfer module (If there are multiple, use any one)
+- **API-Key**: The value of VALID_API_KEY specified in the environment variable when starting the WebAPI transfer module (If there are multiple, use any one)
 - **Optional header**: You can add headers required by the destination
 - **Optional body**: The body required by the destination (e.g., "userid":112233)
