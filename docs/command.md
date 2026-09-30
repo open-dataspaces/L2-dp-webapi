@@ -9,35 +9,34 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
-        }
-    }],
-    "filters": [
-     {
-      "name": "RewritePath",
-      "args": {
-        "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
-        "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
-      }
-    },
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
+            }
+        }],
+        "filters": [{
+            "name": "RewritePath",
+            "args": {
+                "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
+                "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
+            }
+        },
+        {
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -65,28 +64,27 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-        }
-    }],
-    "filters": [
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        }],
+        "filters": [{
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -113,23 +111,23 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-      },
-      { 
-        "name": "Method",
-        "args": { 
-        "_genkey_0": "<HTTPメソッド>"
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        },
+        {
+            "name": "Method",
+            "args": { 
+              "_genkey_0": "<HTTPメソッド>"
+            }
+        }],
+        "metadata": {
+            "endpointId": "<エンドポイントID>"
         }
-    }
-    }],
-    "metadata": {
-      "endpointId": "<エンドポイントID>"
-     }
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -181,7 +179,7 @@ curl -X POST <keycloakドメイン>/realms/<keycloakレルム>/protocol/openid-c
   -d "client_id=<client_id>" \
   -d "client_secret=<コピーしたclient secret>" 
 ```
-- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8010）
+- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8081）
 - **keycloakレルム**：keycloakのレルム（例：master）
 - **client_id**：keycloakのclient id（例：test_client）
 - **コピーしたclient secret**：client idで指定したクライアントのシークレット。クライアントのクレデンシャルタブから確認可。
