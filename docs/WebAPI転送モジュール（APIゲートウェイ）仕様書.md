@@ -163,3 +163,93 @@ Web API転送モジュールが外部システムと通信できない場合に�
   ```
 
 
+## 管理系Actuator API
+
+### 管理系Actuator API 仕様
+Web API転送モジュールでは、Spring Boot Actuator と Spring Cloud Gateway Actuator の管理 API を利用する。公開対象は以下の 3 つである。
+
+- Spring Boot Actuator
+  - `/actuator/health`
+  - `/actuator/info`
+- Spring Cloud Gateway Actuator
+  - `/actuator/gateway/**`
+
+#### Spring Boot Actuator
+##### `/actuator/health`
+
+サービス生存確認や監視基盤からのヘルスチェックに利用する。既定ではアプリケーション全体の稼働状態を返し、`UP`、`DOWN`、`OUT_OF_SERVICE`、`UNKNOWN` などの状態を含む。Spring Boot の health group を設定している場合は、`/actuator/health/liveness` や `/actuator/health/readiness` のような個別グループも利用できる。ヘルスチェック用途のため、ヘッダー検証は行わない。
+
+##### `/actuator/info`
+
+ビルド情報やアプリケーション情報の確認に利用する。`build`、`git`、`java`、`os`、`process`、`ssl` など、Spring Boot が提供する InfoContributor に基づいた情報を返す。`info.*` プロパティを設定している場合は、追加情報も公開できる。呼び出し時は `X-API-Key` ヘッダーに管理用 API キーを指定する。
+
+Spring Boot Actuatorの詳細については以下、公式リファレンスを参照のこと。
+
+公式リファレンス: [Spring Boot Actuator Endpoints](https://docs.spring.io/spring-boot/reference/actuator/endpoints.html)
+
+#### Spring Cloud Gateway Actuator
+##### `/actuator/gateway/**`
+
+Spring Cloud Gateway の管理 API である。`/actuator/gateway` では利用可能な子エンドポイントの一覧を確認できる。主な子エンドポイントは以下の通りである。
+
+- `/actuator/gateway/globalfilters` : グローバルフィルタの一覧を取得する
+- `/actuator/gateway/routefilters` : ルートに適用可能な GatewayFilter factory の一覧を取得する
+- `/actuator/gateway/routes` : ルート定義一覧を取得する
+- `/actuator/gateway/routes/{id}` : 個別ルート定義を取得する
+- `/actuator/gateway/routes/{id}` (POST) : ルート定義を作成する
+- `/actuator/gateway/routes/{id}` (DELETE) : ルート定義を削除する
+- `/actuator/gateway/routes/{id}/combinedfilters` : ルートに適用されるフィルタの組み合わせを取得する
+- `/actuator/gateway/refresh` : ルートキャッシュを再読み込みする
+
+これらのエンドポイントを呼び出す際は、`X-API-Key` ヘッダーに管理用 API キーを指定する。
+
+Spring Cloud Gateway Actuatorの詳細については以下、公式リファレンスを参照のこと。
+
+公式リファレンス: [Spring Cloud Gateway Actuator API](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/actuator-api.html)
+
+### API キー認証
+管理系 Actuator API では、アプリケーション側で設定した管理用 API キーと、リクエスト側で送信する API キーを一致させる必要がある。
+
+- アプリケーション側: `src/main/resources/application.yml` の `apigateway.management-api-key`
+- リクエスト側: 管理系 Actuator API 呼び出し時の `X-API-Key` ヘッダー
+
+#### アプリケーション側の設定
+管理用 API キーは `src/main/resources/application.yml` の `apigateway.management-api-key` に設定する。
+
+設定例:
+
+- `apigateway.management-api-key: "your-secret-management-api-key"`
+
+この値は、実運用では環境変数や外部設定で上書きして使用する。`ApiGatewayProperties` の `managementApiKey` にバインドされ、管理系 Actuator API の照合に使われる。
+
+#### リクエスト側の設定
+管理系 Actuator API を呼び出す際は、HTTP リクエストヘッダーの `X-API-Key` に、アプリケーション側で設定したキーと同じ値を指定する。
+
+設定例:
+
+- `X-API-Key: your-secret-management-api-key`
+
+たとえば、`/actuator/info` や `/actuator/gateway/**` を呼び出す場合は、このヘッダーを付与する。
+
+`management-base-path` の既定値は `/actuator` である。
+
+### ヘッダー検証との関係
+通常の gateway リクエストでは `API-Key` と `Authorization` の検証を行うが、次のパスはヘッダー検証の対象外とする。
+
+- `/actuator/health`
+- `/health`
+- `/actuator/`
+
+また、`RequestTimingFilter` では `/actuator` で始まるリクエストに対して `requestReceivedTime` の記録を行わない。
+
+### 設定値
+主な設定値は以下の通りである。
+
+- `server.port: 8090`
+- `management.endpoints.web.exposure.include: gateway,health,info`
+- `management.endpoint.gateway.access: unrestricted`
+- `security.management-base-path: /actuator`
+- `security.skip-validation-paths: /actuator/health, /health, /actuator/`
+- `security.valid-API-Keys-enabled` により API キー検証の有効 / 無効を制御する
+
+なお、`management.server.port` の設定はこのリポジトリ内では確認できないため、Actuator はアプリケーションと同一ポート配下で公開される前提である。
