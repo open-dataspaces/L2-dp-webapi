@@ -14,14 +14,14 @@ curl -X POST\
         "predicates": [{
             "name": "Path",
             "args": {
-                "_genkey_0": "<Path>**" ← Request path accepted by Gateway
+                "_genkey_0": "<Path>**"
             }
         }],
         "filters": [{
             "name": "RewritePath",
             "args": {
-                "_genkey_0": "/test(?<segment>.*)", ← Request path before rewrite
-                "_genkey_1": "/demo/test/${segment}" ← Destination path after rewrite
+                "_genkey_0": "/test(?<segment>.*)",
+                "_genkey_1": "/demo/test/${segment}"
             }
         },
         {
@@ -49,9 +49,14 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
 - **filters**: The filter applied when entering that route
-    - **RewritePath**: Subdomain settings. Allows path rewriting
+    - **RewritePath**: Rewrites the request path
+        - **args**: Rewrite settings
+            - **_genkey_0**: Regular expression matching the request path before rewriting (`/test(?<segment>.*)`)
+            - **_genkey_1**: Destination path after rewriting (`/demo/test/${segment}`)
     - **AddRequestHeader**: Adds the specified header
     - **RemoveRequestHeader**: Removes the specified header
 - **WebAPI Transfer Module Domain**: The domain of the WebAPI transfer module (http://localhost:8090)
@@ -97,7 +102,9 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
 - **filters**: The filter applied when entering that route
     - **AddRequestHeader**: Adds the specified header
     - **RemoveRequestHeader**: Removes the specified header
@@ -140,7 +147,9 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
     - **HTTP Method**: HTTP method name (e.g., POST, GET, PUT, DELETE)
 - **metadata**: Information required for authorization
     - **Endpoint ID**: Identifier for the API endpoint subject to authorization.<br>

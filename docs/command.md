@@ -14,14 +14,14 @@ curl -X POST\
         "predicates": [{
             "name": "Path",
             "args": {
-                "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
+                "_genkey_0": "<パス>**"
             }
         }],
         "filters": [{
             "name": "RewritePath",
             "args": {
-                "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
-                "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
+                "_genkey_0": "/test(?<segment>.*)",
+                "_genkey_1": "/demo/test/${segment}"
             }
         },
         {
@@ -49,9 +49,14 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
 - **filters**：そのルートに入ったときにかかるフィルター
-    - **RewritePath**：サブドメインの設定。パスを書き換えることができる
+    - **RewritePath**：リクエストパスの書き換え
+        - **args**：書き換え条件
+            - **_genkey_0**：書き換え前のリクエストパスを表す正規表現（`/test(?<segment>.*)`）
+            - **_genkey_1**：書き換え後の送信先パス（`/demo/test/${segment}`）
     - **AddRequestHeader**：指定したHeader追加
     - **RemoveRequestHeader**：指定したHeaderの削除
 - **WebAPI転送モジュールドメイン**：WebAPI転送モジュールのドメイン（http://localhost:8090）
@@ -97,7 +102,9 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
 - **filters**：そのルートに入ったときにかかるフィルター
     - **AddRequestHeader**：指定したHeader追加
     - **RemoveRequestHeader**：指定したHeaderの削除
@@ -140,7 +147,9 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
     - **HTTPメソッド**：HTTPメソッド名（例：POST, GET, PUT, DELETE）
 - **metadata**：認可に必要な情報
     - **エンドポイントID**：認可対象APIエンドポイントの識別子。<br>
