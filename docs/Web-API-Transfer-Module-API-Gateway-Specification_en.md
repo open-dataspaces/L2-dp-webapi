@@ -261,4 +261,4 @@ The main configuration values are as follows:
 - `security.skip-validation-paths: /actuator/health, /health, /actuator/`
 - `security.valid-API-Keys-enabled` controls whether API key validation is enabled or disabled
 
-There is no `management.server.port` setting in this repository, so Actuator is assumed to be exposed under the same application port.
+※ Actuator is exposed on the same port as the application (`server.port`).

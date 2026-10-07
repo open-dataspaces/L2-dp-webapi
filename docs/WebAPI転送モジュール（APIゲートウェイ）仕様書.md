@@ -252,4 +252,4 @@ Spring Cloud Gateway Actuatorの詳細については以下、公式リファレ
 - `security.skip-validation-paths: /actuator/health, /health, /actuator/`
 - `security.valid-API-Keys-enabled` により API キー検証の有効 / 無効を制御する
 
-なお、`management.server.port` の設定はこのリポジトリ内では確認できないため、Actuator はアプリケーションと同一ポート配下で公開される前提である。
+※ Actuator はアプリケーションと同一ポート（`server.port`）で公開する。
