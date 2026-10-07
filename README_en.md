@@ -74,10 +74,10 @@ Install the runtime and build tools used by this repository.
 Example verified versions:
 |Name                                        |Version |
 |:-------------------------------------------|:-------|
-| java                                     | 21.0.9 |
-| apache-maven                             | 3.8.7 |
-| docker                                   | 27.5.1 |
-| docker-compose                           | 2.38.2 |
+| Java                                     | 21.0.9 |
+| Apache Maven                             | 3.8.7 |
+| Docker                                   | 27.5.1 |
+| Docker Compose                           | 2.38.2 |
 | Spring Boot                              | 3.5.4 |
 | Spring Cloud                             | 2025.0.0 |
 | PostgreSQL                               | 17 |
