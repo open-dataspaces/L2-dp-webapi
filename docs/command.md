@@ -9,35 +9,34 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"　←　Gateway が受け付けるリクエストパス
-        }
-    }],
-    "filters": [
-     {
-      "name": "RewritePath",
-      "args": {
-        "_genkey_0": "/test(?<segment>.*)",　←　書き換え前のリクエストパス
-        "_genkey_1": "/demo/test/${segment}"　←　書き換え後の送信先パス
-      }
-    },
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        }],
+        "filters": [{
+            "name": "RewritePath",
+            "args": {
+                "_genkey_0": "/test(?<segment>.*)",
+                "_genkey_1": "/demo/test/${segment}"
+            }
+        },
+        {
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -50,9 +49,14 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
 - **filters**：そのルートに入ったときにかかるフィルター
-    - **RewritePath**：サブドメインの設定。パスを書き換えることができる
+    - **RewritePath**：リクエストパスの書き換え
+        - **args**：書き換え条件
+            - **_genkey_0**：書き換え前のリクエストパスを表す正規表現（`/test(?<segment>.*)`）
+            - **_genkey_1**：書き換え後の送信先パス（`/demo/test/${segment}`）
     - **AddRequestHeader**：指定したHeader追加
     - **RemoveRequestHeader**：指定したHeaderの削除
 - **WebAPI転送モジュールドメイン**：WebAPI転送モジュールのドメイン（http://localhost:8090）
@@ -65,28 +69,27 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-        }
-    }],
-    "filters": [
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        }],
+        "filters": [{
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -99,7 +102,9 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
 - **filters**：そのルートに入ったときにかかるフィルター
     - **AddRequestHeader**：指定したHeader追加
     - **RemoveRequestHeader**：指定したHeaderの削除
@@ -113,23 +118,23 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <マネージメントAPI-Key>"\
     -d '{
-    "id": "<ルート番号>",
-    "uri": "<転送先ドメイン>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<パス>**"
-      },
-      { 
-        "name": "Method",
-        "args": { 
-        "_genkey_0": "<HTTPメソッド>"
+        "id": "<ルート番号>",
+        "uri": "<転送先ドメイン>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<パス>**"
+            }
+        },
+        {
+            "name": "Method",
+            "args": { 
+              "_genkey_0": "<HTTPメソッド>"
+            }
+        }],
+        "metadata": {
+            "endpointId": "<エンドポイントID>"
         }
-    }
-    }],
-    "metadata": {
-      "endpointId": "<エンドポイントID>"
-     }
     }'\
     <Web API転送モジュールドメイン>/actuator/gateway/routes/<ルート番号>
 
@@ -142,7 +147,9 @@ curl -s -H "X-API-Key: <マネージメントAPI-Key>"\
 - **ルート番号**：登録ルートのインデックスとなる番号（例：route01）
 - **転送先ドメイン**：転送先のドメイン（例：http://prism:4010）
 - **predicates**：ルート分岐の判断材料
-	- **パス**：リクエストパス。受信したリクエストパスを転送先に引き継ぐ（例：/test）
+    - **Path**：リクエストパスによるルートの判定
+        - **args**：判定条件
+            - **_genkey_0**：Gateway が受け付けるリクエストパス（`<パス>**`）
     - **HTTPメソッド**：HTTPメソッド名（例：POST, GET, PUT, DELETE）
 - **metadata**：認可に必要な情報
     - **エンドポイントID**：認可対象APIエンドポイントの識別子。<br>
@@ -181,7 +188,7 @@ curl -X POST <keycloakドメイン>/realms/<keycloakレルム>/protocol/openid-c
   -d "client_id=<client_id>" \
   -d "client_secret=<コピーしたclient secret>" 
 ```
-- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8010）
+- **keycloakドメイン**：keycloakのドメイン。WebAPI転送モジュール環境変数で指定したKEYCLOAK_URLと同じものを設定する（例：http://keycloak:8081）
 - **keycloakレルム**：keycloakのレルム（例：master）
 - **client_id**：keycloakのclient id（例：test_client）
 - **コピーしたclient secret**：client idで指定したクライアントのシークレット。クライアントのクレデンシャルタブから確認可。
