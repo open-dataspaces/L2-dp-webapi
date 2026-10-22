@@ -171,3 +171,94 @@ Returned when the response from the external system times out.
     "detail": "timeStamp: 2025-09-25T14:30:00Z"
   }
 ```
+
+## Management Actuator API
+
+### Management Actuator API Specification
+The Web API Transfer Module uses Spring Boot Actuator and Spring Cloud Gateway Actuator management APIs. The following three endpoints are exposed:
+
+- Spring Boot Actuator
+  - `/actuator/health`
+  - `/actuator/info`
+- Spring Cloud Gateway Actuator
+  - `/actuator/gateway/**`
+
+#### Spring Boot Actuator
+##### `/actuator/health`
+
+This endpoint is used for service availability checks and health checks from monitoring infrastructure. By default, it returns the overall application status and includes states such as `UP`, `DOWN`, `OUT_OF_SERVICE`, and `UNKNOWN`. If Spring Boot health groups are configured, individual groups such as `/actuator/health/liveness` and `/actuator/health/readiness` can also be used. Header validation is not performed because this endpoint is intended for health checks.
+
+##### `/actuator/info`
+
+This endpoint is used to inspect build information and application information. It returns data based on Spring Boot InfoContributors such as `build`, `git`, `java`, `os`, `process`, and `ssl`. If `info.*` properties are configured, additional information can also be exposed. When calling this endpoint, specify the management API key in the `X-API-Key` header.
+
+For details on Spring Boot Actuator, refer to the official reference below.
+
+Official reference: [Spring Boot Actuator Endpoints](https://docs.spring.io/spring-boot/reference/actuator/endpoints.html)
+
+#### Spring Cloud Gateway Actuator
+##### `/actuator/gateway/**`
+
+This is the management API for Spring Cloud Gateway. The `/actuator/gateway` endpoint allows you to check the list of available child endpoints. The main child endpoints are as follows:
+
+- `/actuator/gateway/globalfilters`: Retrieves the list of global filters
+- `/actuator/gateway/routefilters`: Retrieves the list of GatewayFilter factories that can be applied to routes
+- `/actuator/gateway/routes`: Retrieves the route definition list
+- `/actuator/gateway/routes/{id}`: Retrieves an individual route definition
+- `/actuator/gateway/routes/{id}` (POST): Creates a route definition
+- `/actuator/gateway/routes/{id}` (DELETE): Deletes a route definition
+- `/actuator/gateway/routes/{id}/combinedfilters`: Retrieves the combination of filters applied to a route
+- `/actuator/gateway/refresh`: Reloads the route cache
+
+When calling these endpoints, specify the management API key in the `X-API-Key` header.
+
+For details on Spring Cloud Gateway Actuator, refer to the official reference below.
+
+Official reference: [Spring Cloud Gateway Actuator API](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/actuator-api.html)
+
+### API Key Authentication
+Management Actuator APIs require the application-side management API key and the request-side API key to match.
+
+- Application side: `apigateway.management-api-key` in `src/main/resources/application.yml`
+- Request side: the `X-API-Key` header used when calling management Actuator APIs
+
+#### Application-Side Configuration
+Set the management API key in `apigateway.management-api-key` in `src/main/resources/application.yml`.
+
+Example:
+
+- `apigateway.management-api-key: "your-secret-management-api-key"`
+
+In production, this value is typically overridden by environment variables or external configuration. It is bound to `ApiGatewayProperties.managementApiKey` and used to validate management Actuator APIs.
+
+#### Request-Side Configuration
+When calling management Actuator APIs, specify the same value as the application side in the `X-API-Key` header.
+
+Example:
+
+- `X-API-Key: your-secret-management-api-key`
+
+For example, this header must be included when calling `/actuator/info` or `/actuator/gateway/**`.
+
+The default value of `management-base-path` is `/actuator`.
+
+### Relationship with Header Validation
+For normal gateway requests, `API-Key` and `Authorization` are validated, but the following paths are excluded from header validation:
+
+- `/actuator/health`
+- `/health`
+- `/actuator/`
+
+In addition, `RequestTimingFilter` does not record `requestReceivedTime` for requests whose path begins with `/actuator`.
+
+### Configuration Values
+The main configuration values are as follows:
+
+- `server.port: 8090`
+- `management.endpoints.web.exposure.include: gateway,health,info`
+- `management.endpoint.gateway.access: unrestricted`
+- `security.management-base-path: /actuator`
+- `security.skip-validation-paths: /actuator/health, /health, /actuator/`
+- `security.valid-API-Keys-enabled` controls whether API key validation is enabled or disabled
+
+※ Actuator is exposed on the same port as the application (`server.port`).
