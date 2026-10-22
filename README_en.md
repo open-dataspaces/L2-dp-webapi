@@ -72,12 +72,19 @@ Install the runtime and build tools used by this repository.
   - Distribution: Ubuntu-24.04
 
 Example verified versions:
-| Name              | Version |
-|:------------------|:--------|
-| Java              | 21.0.9  |
-| Apache Maven      | 3.8.7   |
-| Docker            | 27.5.1  |
-| Docker Compose    | 2.38.2  |
+|Name                                        |Version |
+|:-------------------------------------------|:-------|
+| Java                                     | 21.0.9 |
+| Apache Maven                             | 3.8.7 |
+| Docker                                   | 27.5.1 |
+| Docker Compose                           | 2.38.2 |
+| Spring Boot                              | 3.5.4 |
+| Spring Cloud                             | 2025.0.0 |
+| PostgreSQL                               | 17 |
+| Keycloak                                 | 26.3 |
+| MySQL                                    | 8 |
+| OpenFGA                                  | v1.9.5-authzen |
+| Prism                                    | 4 |
 
 ### Materials
 **Web API Transfer Module materials are available in the repository:**<br>
@@ -101,7 +108,7 @@ If changes are needed, edit the docker-compose.yml file.
 | KEYCLOAK_URL                     | Keycloak URL used for JWT verification                 | http://localhost:8081 |
 | KEYCLOAK_REALM                   | Keycloak realm name                                    | master |
 | FGA_URL                          | OpenFGA URL                                            | http://openFGA:8080 |
-| FGA_STORE_ID                     | OpenFGA store ID                                       |        |
+| FGA_STORE_ID                     | OpenFGA store ID                                       | 12345ABCDEFGHIJKLMNOPQRSTU |
 | DB_URL                           | Database URL for route registry                        | jdbc:postgresql://postgres:5432/postgres |
 | DB_USERNAME                      | Database user                                         | postgres |
 | DB_PASSWORD                      | Database password                                     | password |

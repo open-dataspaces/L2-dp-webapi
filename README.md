@@ -77,6 +77,13 @@ ODSでは産業界がデータスペースの社会実装を早急に進める�
 | apache-maven                             | 3.8.7 |
 | docker                                   | 27.5.1 |
 | docker-compose                           | 2.38.2 |
+| Spring Boot                              | 3.5.4 |
+| Spring Cloud                             | 2025.0.0 |
+| PostgreSQL                               | 17 |
+| Keycloak                                 | 26.3 |
+| MySQL                                    | 8 |
+| OpenFGA                                  | v1.9.5-authzen |
+| Prism                                    | 4 |
 
 ### 資材
 **WebAPI転送モジュール起動用資材：**<br>
@@ -101,12 +108,12 @@ ODSでは産業界がデータスペースの社会実装を早急に進める�
 | KEYCLOAK_URL                  | JWT検証先のKeycloakのURL                                              | http://keycloak:8081 |
 | KEYCLOAK_REALM                | JWT検証先のKeycloakのRealm name                                       | master |
 | FGA_URL                       | OpenFGAのURL                                                          | http://openFGA:8080 |
-| FGA_STORE_ID                  | OpenFGAのStoreID                                                      |  |
+| FGA_STORE_ID                  | OpenFGAのStoreID                                                      | 12345ABCDEFGHIJKLMNOPQRSTU |
 | DB_URL                        | ルート登録用データベースURL                                           | jdbc:postgresql://postgres:5432/postgres |
 | DB_USERNAME                   | データベース接続用ユーザ                                              | postgres |
 | DB_PASSWORD                   | データベース接続用パスワード                                          | password |
 | DB_SCHEMA                     | ルート登録用データベーススキーマ                                      | public |
-| VALID_API_KEYS                | クライアントから送信され、Web API転送モジュールで検証を行うAPI-KEYの値 | 12345-test-key |
+| VALID_API_KEYS                | クライアントから送信され、Web API転送モジュールで検証を行うAPI-Keyの値 | 12345-test-key |
 | LOGLEVEL                      | ログレベル                                                            | INFO, DEBUG |
 | VALID_API_KEYS_ENABLED        | Web API転送モジュールでAPI-Key検証を実施するかどうかを設定             | 有⇒true　無⇒false |
 | AUTHZEN_AUTHORIZATION_ENABLED | L3と連携してPEPとしての機能を有効化するかどうかを設定                 |有⇒true　無⇒false |
