@@ -9,35 +9,34 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <Management API-Key>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**" ← Request path accepted by Gateway
-        }
-    }],
-    "filters": [
-     {
-      "name": "RewritePath",
-      "args": {
-        "_genkey_0": "/test(?<segment>.*)", ← Request path before rewrite
-        "_genkey_1": "/demo/test/${segment}" ← Destination path after rewrite
-      }
-    },
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**"
+            }
+        }],
+        "filters": [{
+            "name": "RewritePath",
+            "args": {
+                "_genkey_0": "/test(?<segment>.*)",
+                "_genkey_1": "/demo/test/${segment}"
+            }
+        },
+        {
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
@@ -50,9 +49,14 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
 - **filters**: The filter applied when entering that route
-    - **RewritePath**: Subdomain settings. Allows path rewriting
+    - **RewritePath**: Rewrites the request path
+        - **args**: Rewrite settings
+            - **_genkey_0**: Regular expression matching the request path before rewriting (`/test(?<segment>.*)`)
+            - **_genkey_1**: Destination path after rewriting (`/demo/test/${segment}`)
     - **AddRequestHeader**: Adds the specified header
     - **RemoveRequestHeader**: Removes the specified header
 - **WebAPI Transfer Module Domain**: The domain of the WebAPI transfer module (http://localhost:8090)
@@ -65,28 +69,27 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <Management API-Key>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**"
-        }
-    }],
-    "filters": [
-    {
-        "name": "AddRequestHeader",
-        "args": {
-            "name": "X-API-Key",
-            "value": "sent-api-key-123"
-        }
-    },
-    {
-        "name": "RemoveRequestHeader",
-        "args": {
-        "name": "API-Key"
-    }
-    }]
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+        "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**"
+            }
+        }],
+        "filters": [{
+            "name": "AddRequestHeader",
+            "args": {
+                "name": "X-API-Key",
+                "value": "sent-api-key-123"
+            }
+        },
+        {
+            "name": "RemoveRequestHeader",
+            "args": {
+                "name": "API-Key"
+            }
+        }]
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
@@ -99,7 +102,9 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
 - **filters**: The filter applied when entering that route
     - **AddRequestHeader**: Adds the specified header
     - **RemoveRequestHeader**: Removes the specified header
@@ -113,23 +118,23 @@ curl -X POST\
     -H "Content-Type: application/json"\
     -H "X-API-Key: <Management API-Key>"\
     -d '{
-    "id": "<Route Number>",
-    "uri": "<Destination Domain>",
-    "predicates": [{
-        "name": "Path",
-        "args": {
-        "_genkey_0": "<Path>**"
-      },
-      { 
-        "name": "Method",
-        "args": { 
-        "_genkey_0": "<HTTP Method>"
+        "id": "<Route Number>",
+        "uri": "<Destination Domain>",
+            "predicates": [{
+            "name": "Path",
+            "args": {
+                "_genkey_0": "<Path>**"
+            }
+        },
+        {
+            "name": "Method",
+            "args": { 
+              "_genkey_0": "<HTTP Method>"
+            }
+        }],
+        "metadata": {
+            "endpointId": "<Endpoint ID>"
         }
-    }
-    }],
-    "metadata": {
-      "endpointId": "<Endpoint ID>"
-     }
     }'\
     <WebAPI Transfer Module Domain>/actuator/gateway/routes/<Route Number>
 
@@ -142,7 +147,9 @@ curl -s -H "X-API-Key: <Management API-Key>"\
 - **Route Number**: The index number for the registered route (e.g., route01)
 - **Destination Domain**: The domain to forward to (e.g., http://prism:4010)
 - **predicates**: Criteria for route branching decisions
-    - **Path**: Request path. The received request path is forwarded to the destination (e.g., /test)
+    - **Path**: Matches routes by request path
+        - **args**: Matching criteria
+            - **_genkey_0**: Request path accepted by Gateway (`<Path>**`)
     - **HTTP Method**: HTTP method name (e.g., POST, GET, PUT, DELETE)
 - **metadata**: Information required for authorization
     - **Endpoint ID**: Identifier for the API endpoint subject to authorization.<br>
@@ -181,7 +188,7 @@ curl -X POST <keycloak domain>/realms/<keycloak realm>/protocol/openid-connect/t
   -d "client_id=<client_id>" \
   -d "client_secret=<copied client secret>" 
 ```
-- **keycloak domain**: The domain for keycloak. Set the same value as KEYCLOAK_URL specified in the WebAPI transfer module environment variable (e.g., http://keycloak:8010)
+- **keycloak domain**: The domain for keycloak. Set the same value as KEYCLOAK_URL specified in the WebAPI transfer module environment variable (e.g., http://keycloak:8081)
 - **keycloak realm**: The realm for keycloak (e.g., master)
 - **client_id**: The client id for keycloak (e.g., test_client)
 - **copied client secret**: The secret for the client specified by client id. Can be checked in the credentials tab of the client.
